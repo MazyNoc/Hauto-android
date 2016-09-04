@@ -18,7 +18,11 @@ public class Storage {
 	}
 
 	public Unit getSensorId(String id) {
-		return sensors.stream().filter(sensor -> sensor.id.equals(id)).findFirst().orElse(null);
+		for (Unit sensor : sensors) {
+			if(sensor.id.equals(id))
+				return  sensor;
+		}
+		return null;
 	}
 
 	public void addSensors(List<Unit> sensors) {

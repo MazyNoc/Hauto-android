@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="data"
+            type="nu.annat.autohome.api.SwitchUnit"/>
+
+        <variable
+            name="handler"
+            type="nu.annat.autohome.SwitchViewHolder"/>
+    </data>
+
+    <nu.annat.autohome.AspectRatioFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/item_padding_half"
+            android:background="@{data.on ? @color/switchOn : @color/switchOff}"
+            android:onClick="@{(view)->handler.toggle()}"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:text="@{data.name}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="mums"
+                />
+        </android.support.constraint.ConstraintLayout>
+    </nu.annat.autohome.AspectRatioFrameLayout>
+
+</layout>

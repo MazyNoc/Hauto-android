@@ -44,37 +44,41 @@ public class LayoutPageViewer extends PagerAdapter {
 
 	public LayoutPageViewer(ViewPager pager, LayoutInflater inflater, All all) {
 
-		items = all.layouts.stream().map(layout -> {
+		items = new ArrayList<>();
+		for (Layout layout : all.layouts) {
 			ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.layout_master, pager, false);
 			RecyclerView content = (RecyclerView) viewGroup.findViewById(R.id.content);
-			content.setLayoutManager(new GridLayoutManager(null, 2));
+			content.setLayoutManager(new GridLayoutManager(null, 3));
+
 			content.setAdapter(new ItemsAdapter(
-				layout.unitIds.stream().map(s ->  Storage.getInstance().getSensorId(s)).collect(Collectors.toList())
+				getSensors(layout.unitIds)
 			));
-//			layout.unitIds.stream().forEach(s -> {
-//				Unit sensor = Storage.getInstance().getSensorId(s);
-//				if (sensor instanceof SwitchUnit) {
-//					SwitchUnit switchSensor = (SwitchUnit) sensor;
-//					View inflate = inflater.inflate(R.layout.item_switch, content, false);
-//					CompoundButton onoff = (CompoundButton) inflate.findViewById(R.id.onoff);
-//					onoff.setTag(switchSensor);
-//					onoff.setText(switchSensor.name);
-//					onoff.setChecked(switchSensor.isOn);
-//					onoff.setOnCheckedChangeListener((compoundButton, b) -> {
-//						SwitchUnit tag = (SwitchUnit) compoundButton.getTag();
-//						this.changeSensor(tag, b);
-//						//	worker.changeSensor(switchSensor, b);
-//					});
-//					content.addView(inflate);
-//				}
-//			});
-			return new ViewAndData(viewGroup, layout);
-		}).collect(Collectors.toList());
+			items.add(new ViewAndData(viewGroup, layout));
+
+		}
+
+//		items = all.layouts.stream().map(layout -> {
+//			ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.layout_master, pager, false);
+//			RecyclerView content = (RecyclerView) viewGroup.findViewById(R.id.content);
+//			content.setLayoutManager(new GridLayoutManager(null, 2));
+//			content.setAdapter(new ItemsAdapter(
+//				layout.unitIds.stream().map(s ->  Storage.getInstance().getSensorId(s)).collect(Collectors.toList())
+//			));
+//			return new ViewAndData(viewGroup, layout);
+//		}).collect(Collectors.toList());
+	}
+
+	private List<Unit> getSensors(List<String> unitIds) {
+		List<Unit> result= new ArrayList<>(unitIds.size());
+		for (String unitId : unitIds) {
+			result.add( Storage.getInstance().getSensorId(unitId));
+		}
+		return result;
 	}
 
 	public void changeSensor(SwitchUnit sensor, boolean b) {
-		sensor.isOn = b;
-		Server.getInstance().getService().executeSwitchOutlet(sensor.id, sensor.isOn?"start":"stop").enqueue(new Callback<ResponseBody>() {
+		sensor.setOn( b);
+		Server.getInstance().getService().executeSwitchOutlet(sensor.id, sensor.isOn()?"start":"stop").enqueue(new Callback<ResponseBody>() {
 			@Override
 			public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 

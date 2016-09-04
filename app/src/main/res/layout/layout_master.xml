@@ -5,6 +5,8 @@
         android:id="@+id/content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="@dimen/item_padding_half"
+        android:clipToPadding="false"
         android:orientation="vertical">
 
     </android.support.v7.widget.RecyclerView>

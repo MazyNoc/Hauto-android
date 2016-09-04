@@ -2,7 +2,7 @@ package nu.annat.autohome;
 
 import android.view.View;
 
-public abstract class BasePresenter<WORKER> {
+public abstract class BasePresenter<WORKER extends BaseWorker> {
 	protected final View root;
 	protected final WORKER worker;
 

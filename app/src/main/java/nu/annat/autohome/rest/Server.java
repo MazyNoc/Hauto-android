@@ -25,7 +25,7 @@ public class Server {
 		private final Class<?> baseClass = Unit.class;
 
 		@Override
-		public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+		public <T> TypeAdapter<T> create(final Gson gson, TypeToken<T> type) {
 			if (type.getRawType() != baseClass) return null;
 
 			//TypeAdapter<SwitchUnit> delegateAdapter = gson.getDelegateAdapter(this, TypeToken.get(SwitchUnit.class));

@@ -9,10 +9,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LayoutWorker {
+public class LayoutWorker extends BaseWorker{
 	public void changeSensor(SwitchUnit sensor, boolean b) {
-		sensor.isOn = b;
-		Server.getInstance().getService().executeSwitchOutlet(sensor.id, sensor.isOn?"start":"stop").enqueue(new Callback<ResponseBody>() {
+		sensor.setOn(b);
+		Server.getInstance().getService().executeSwitchOutlet(sensor.id, sensor.isOn()?"start":"stop").enqueue(new Callback<ResponseBody>() {
 			@Override
 			public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 

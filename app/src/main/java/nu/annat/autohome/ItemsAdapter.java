@@ -1,5 +1,7 @@
 package nu.annat.autohome;
 
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +12,12 @@ import java.util.List;
 
 import nu.annat.autohome.api.Sensor;
 import nu.annat.autohome.api.SensorList;
+import nu.annat.autohome.api.SwitchUnit;
 import nu.annat.autohome.api.Unit;
+import nu.annat.autohome.databinding.SensorRowBinding;
+import nu.annat.autohome.databinding.SwitchRowBinding;
 
-public class ItemsAdapter extends RecyclerView.Adapter<OutputViewHolder> {
+public class ItemsAdapter extends RecyclerView.Adapter<SwitchViewHolder> {
 
 	private LayoutInflater inflater;
 	private List<Unit> data = new ArrayList<>();
@@ -22,15 +27,15 @@ public class ItemsAdapter extends RecyclerView.Adapter<OutputViewHolder> {
 	}
 
 	@Override
-	public OutputViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+	public SwitchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		inflater = LayoutInflater.from(parent.getContext());
-		View view = inflater.inflate(R.layout.sensor_row, parent, false);
-		return new OutputViewHolder(view);
+		SwitchRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.switch_row, parent, false);
+		return new SwitchViewHolder(binding);
 	}
 
 	@Override
-	public void onBindViewHolder(OutputViewHolder holder, int position) {
-		holder.setData(data.get(position));
+	public void onBindViewHolder(SwitchViewHolder holder, int position) {
+		holder.setData((SwitchUnit) data.get(position));
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import nu.annat.autohome.api.Layout;
-import nu.annat.autohome.api.Sensor;
 import nu.annat.autohome.api.SwitchUnit;
 import nu.annat.autohome.api.Unit;
 
@@ -28,23 +27,24 @@ public class LayoutPresenter extends BasePresenter<LayoutWorker> {
 		content.removeAllViews();
 
 		Storage storage = Storage.getInstance();
-		layout.unitIds.forEach(s -> {
-			final Unit sensor = storage.getSensorId(s);
+		for (String unitId : layout.unitIds) {
+			final Unit sensor = storage.getSensorId(unitId);
 
-			if(sensor instanceof SwitchUnit) {
-				SwitchUnit switchSensor = (SwitchUnit) sensor;
+			if (sensor instanceof SwitchUnit) {
+				final SwitchUnit switchSensor = (SwitchUnit) sensor;
 				View inflate = inflater.inflate(R.layout.item_switch, content, false);
 				CompoundButton onoff = (CompoundButton) inflate.findViewById(R.id.onoff);
 				onoff.setTag(switchSensor);
 				onoff.setText(switchSensor.name);
-				onoff.setChecked(switchSensor.isOn);
-				onoff.setOnCheckedChangeListener((compoundButton, b) -> {
-					worker.changeSensor(switchSensor, b);
+				onoff.setChecked(switchSensor.isOn());
+				onoff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+					@Override
+					public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+						worker.changeSensor(switchSensor, b);
+					}
 				});
 				content.addView(inflate);
 			}
-
-
-		});
+		}
 	}
 }

@@ -4,15 +4,12 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import nu.annat.autohome.ItemsAdapter;
 import nu.annat.autohome.R;
@@ -42,19 +39,19 @@ public class LayoutPageViewer extends PagerAdapter {
 
 	private List<ViewAndData> items = new ArrayList<>();
 
-	public LayoutPageViewer(ViewPager pager, LayoutInflater inflater, All all) {
+	public LayoutPageViewer(ViewPager pager, LayoutInflater inflater, All all, boolean coldStart) {
 
 		items = new ArrayList<>();
 		for (Layout layout : all.layouts) {
 			ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.layout_master, pager, false);
 			RecyclerView content = (RecyclerView) viewGroup.findViewById(R.id.content);
-			content.setLayoutManager(new GridLayoutManager(null, 3));
+			content.setItemAnimator(new ItemAnimator());
+			content.setLayoutManager(new GridLayoutManager(null, inflater.getContext().getResources().getInteger(R.integer.cells)));
 
 			content.setAdapter(new ItemsAdapter(
-				getSensors(layout.unitIds)
+				getSensors(layout.unitIds), coldStart
 			));
 			items.add(new ViewAndData(viewGroup, layout));
-
 		}
 
 //		items = all.layouts.stream().map(layout -> {
@@ -69,16 +66,16 @@ public class LayoutPageViewer extends PagerAdapter {
 	}
 
 	private List<Unit> getSensors(List<String> unitIds) {
-		List<Unit> result= new ArrayList<>(unitIds.size());
+		List<Unit> result = new ArrayList<>(unitIds.size());
 		for (String unitId : unitIds) {
-			result.add( Storage.getInstance().getSensorId(unitId));
+			result.add(Storage.getInstance().getSensorId(unitId));
 		}
 		return result;
 	}
 
 	public void changeSensor(SwitchUnit sensor, boolean b) {
-		sensor.setOn( b);
-		Server.getInstance().getService().executeSwitchOutlet(sensor.id, sensor.isOn()?"start":"stop").enqueue(new Callback<ResponseBody>() {
+		sensor.setOn(b);
+		Server.getInstance().getService().executeSwitchOutlet(sensor.id, sensor.isOn() ? "start" : "stop").enqueue(new Callback<ResponseBody>() {
 			@Override
 			public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
@@ -89,11 +86,6 @@ public class LayoutPageViewer extends PagerAdapter {
 
 			}
 		});
-	}
-
-	@Override
-	public CharSequence getPageTitle(int position) {
-		return items.get(position).layout.name;
 	}
 
 	@Override
@@ -116,5 +108,26 @@ public class LayoutPageViewer extends PagerAdapter {
 	@Override
 	public boolean isViewFromObject(View view, Object object) {
 		return ((ViewAndData) object).view.equals(view);
+	}
+
+	@Override
+	public CharSequence getPageTitle(int position) {
+		return items.get(position).layout.name;
+	}
+
+	public String getPageId(int position) {
+		return items.get(position).layout.id;
+	}
+
+	public int getPosition(String id) {
+		int i = 0;
+		for (ViewAndData item : items) {
+			if (item.layout.id.equals(id)) {
+				return i;
+			} else {
+				i++;
+			}
+		}
+		return 0;
 	}
 }

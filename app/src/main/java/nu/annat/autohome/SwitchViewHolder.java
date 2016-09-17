@@ -10,16 +10,18 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SwitchViewHolder extends BaseViewHolder<SwitchUnit, SwitchRowBinding> {
+public class SwitchViewHolder extends BaseViewHolder<SwitchUnit, SwitchRowBinding> implements View.OnClickListener{
 
 	public SwitchViewHolder(SwitchRowBinding binding) {
 		super(binding);
 		binding.setHandler(this);
+		binding.ripple.setOnClickListener(this);
+
 	}
 
 	public void toggle() {
 		SwitchUnit unit = data;
-		unit.setOn(!unit.isOn());
+		unit.setOn(binding.ripple.isOn());
 		Server.getInstance().getService().setOutlet(data.id, unit.isOn() ? "start" : "stop").enqueue(new Callback<ResponseBody>() {
 			@Override
 			public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -28,7 +30,7 @@ public class SwitchViewHolder extends BaseViewHolder<SwitchUnit, SwitchRowBindin
 
 			@Override
 			public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+			//	binding.getData().to
 			}
 		});
 	}
@@ -39,7 +41,13 @@ public class SwitchViewHolder extends BaseViewHolder<SwitchUnit, SwitchRowBindin
 		if (sensor == null) {
 		} else {
 			binding.setVariable(BR.data, sensor);
+			binding.ripple.setState(sensor.isOn());
 		}
 		binding.executePendingBindings();
+	}
+
+	@Override
+	public void onClick(View view) {
+		toggle();
 	}
 }

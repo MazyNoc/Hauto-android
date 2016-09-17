@@ -2,6 +2,7 @@ package nu.annat.autohome.api;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.graphics.Bitmap;
 
 import com.android.databinding.library.baseAdapters.BR;
 
@@ -9,6 +10,8 @@ public class Unit extends BaseObservable implements Comparable<Unit> {
 	public String type;
 	public String id;
 	public String name;
+	public String imageId;
+	public transient Bitmap image;
 
 	// radiobuttons
 	public String[] buttons;
@@ -34,5 +37,15 @@ public class Unit extends BaseObservable implements Comparable<Unit> {
 	@Override
 	public int compareTo(Unit unit) {
 		return name.compareTo(unit.name);
+	}
+
+	@Bindable
+	public Bitmap getImage() {
+		return image;
+	}
+
+	public void setImage(Bitmap image) {
+		this.image = image;
+		notifyPropertyChanged(BR.image);
 	}
 }

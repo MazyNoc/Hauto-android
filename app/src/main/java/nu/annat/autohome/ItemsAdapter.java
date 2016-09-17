@@ -1,29 +1,30 @@
 package nu.annat.autohome;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.DecelerateInterpolator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import nu.annat.autohome.api.Sensor;
-import nu.annat.autohome.api.SensorList;
 import nu.annat.autohome.api.SwitchUnit;
 import nu.annat.autohome.api.Unit;
-import nu.annat.autohome.databinding.SensorRowBinding;
 import nu.annat.autohome.databinding.SwitchRowBinding;
 
 public class ItemsAdapter extends RecyclerView.Adapter<SwitchViewHolder> {
 
+	private final boolean useAnims;
 	private LayoutInflater inflater;
 	private List<Unit> data = new ArrayList<>();
+	private int lastPosition = -1;
 
-	public ItemsAdapter(List<Unit> sensors) {
+	public ItemsAdapter(List<Unit> sensors, boolean useAnims) {
 		data = sensors;
+		this.useAnims = useAnims;
 	}
 
 	@Override
@@ -36,10 +37,22 @@ public class ItemsAdapter extends RecyclerView.Adapter<SwitchViewHolder> {
 	@Override
 	public void onBindViewHolder(SwitchViewHolder holder, int position) {
 		holder.setData((SwitchUnit) data.get(position));
+		if (useAnims) setAnimation(holder);
 	}
 
 	@Override
 	public int getItemCount() {
 		return data.size();
+	}
+
+	private void setAnimation(RecyclerView.ViewHolder holder) {
+		// If the bound view wasn't previously displayed on screen, it's animated
+		if (holder.getAdapterPosition() > lastPosition) {
+			Animation animation = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.slide_up);
+			animation.setInterpolator(new DecelerateInterpolator(1f));
+			animation.setStartOffset(holder.getAdapterPosition() * 50);
+			holder.itemView.startAnimation(animation);
+			lastPosition = holder.getAdapterPosition();
+		}
 	}
 }

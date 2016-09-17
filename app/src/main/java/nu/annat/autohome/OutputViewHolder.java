@@ -7,6 +7,7 @@ import android.widget.TextView;
 import nu.annat.autohome.api.SwitchUnit;
 import nu.annat.autohome.api.Unit;
 import nu.annat.autohome.databinding.SensorRowBinding;
+import nu.annat.autohome.databinding.SwitchRowBinding;
 import nu.annat.autohome.rest.Server;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -18,6 +19,7 @@ public class OutputViewHolder extends BaseViewHolder<Unit, SensorRowBinding> {
 	public OutputViewHolder(SensorRowBinding binding) {
 		super(binding);
 		binding.setHandler(this);
+
 	}
 //
 //	public void OutputViewHolder(View itemView) {

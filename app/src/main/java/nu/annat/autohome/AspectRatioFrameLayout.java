@@ -27,7 +27,7 @@ public class AspectRatioFrameLayout extends FrameLayout {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		int size = Math.max(getMeasuredWidth(), getMeasuredHeight());
+		int size = getMeasuredWidth();// Math.max(getMeasuredWidth(), getMeasuredHeight());
 		int spec = MeasureSpec.makeMeasureSpec(size, MeasureSpec.EXACTLY);
 		super.onMeasure(spec, spec);
 	}

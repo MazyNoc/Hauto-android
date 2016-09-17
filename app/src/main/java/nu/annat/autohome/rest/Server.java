@@ -15,6 +15,7 @@ import java.io.IOException;
 import nu.annat.autohome.api.DimmerUnit;
 import nu.annat.autohome.api.SwitchUnit;
 import nu.annat.autohome.api.Unit;
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -57,9 +58,11 @@ public class Server {
 
 	private Api service;
 	private Retrofit retrofit;
+	public OkHttpClient client = new OkHttpClient();
 
 	public Server() {
 		Retrofit.Builder builder = new Retrofit.Builder()
+			.client(client)
 			.addConverterFactory(GsonConverterFactory.create(getGson()))
 			.baseUrl("http://192.168.1.125:5443/api/");
 		retrofit = builder.build();

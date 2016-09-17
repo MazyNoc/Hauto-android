@@ -18,31 +18,48 @@
 
     <nu.annat.autohome.AspectRatioFrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:addStatesFromChildren="true"
+        android:background="@color/windowBackground"
+        android:stateListAnimator="@drawable/test"
+        >
 
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/constraintLayout"
+        <!--<android.support.constraint.ConstraintLayout-->
+        <!--android:id="@+id/constraintLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_margin="@dimen/item_padding_half"-->
+        <!--android:background="@{data.on ? @color/switchOn : @color/switchOff}"-->
+        <!--android:onClick="@{(view)->handler.toggle()}"-->
+        <!--android:orientation="vertical">-->
+
+        <nu.annat.autohome.ui.RippleCard
+            android:id="@+id/ripple"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/item_padding_half"
-            android:background="@{data.on ? @color/switchOn : @color/switchOff}"
-            android:onClick="@{(view)->handler.toggle()}"
-            android:orientation="vertical">
+            android:stateListAnimator="@drawable/scale"
+            app:image="@{data.image}">
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:layout_marginStart="8dp"
-                android:text="@{data.name}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="mums"
-                />
-        </android.support.constraint.ConstraintLayout>
+        </nu.annat.autohome.ui.RippleCard>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/gradient"
+            android:gravity="center"
+            android:paddingTop="18dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="@{data.name}"
+            android:textColor="@android:color/white"
+            tools:text="mums"
+            />
+        <!--</android.support.constraint.ConstraintLayout>-->
     </nu.annat.autohome.AspectRatioFrameLayout>
-
 </layout>

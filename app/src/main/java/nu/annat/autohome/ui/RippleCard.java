@@ -11,7 +11,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -84,7 +83,6 @@ public class RippleCard extends FrameLayout implements View.OnClickListener {
 	}
 
 	public void setImage(Bitmap image) {
-		Log.d(TAG, "setImage() called with: image = [" + image + "]");
 		this.image = image;
 		if (getChildCount() > 0) {
 			((ImageView) getChildAt(0)).setImageBitmap(image);
@@ -103,7 +101,6 @@ public class RippleCard extends FrameLayout implements View.OnClickListener {
 	}
 
 	public void setState(boolean state) {
-		Log.d(TAG, "setState() called with: state = [" + state + "]");
 		on = state;
 		prepareView((ImageView) getChildAt(0));
 	}
@@ -119,12 +116,10 @@ public class RippleCard extends FrameLayout implements View.OnClickListener {
 
 	@Override
 	public void addView(View child) {
-		Log.d(TAG, "addView() called with: child = [" + child + "]");
 		super.addView(child);
 	}
 
 	private void toggle() {
-		Log.d(TAG, "toggle() called");
 		on = !on;
 		ImageView imageView = new ImageView(getContext());
 		addView(imageView);

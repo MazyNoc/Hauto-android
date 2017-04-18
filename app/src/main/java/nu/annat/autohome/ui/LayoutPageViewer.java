@@ -46,11 +46,25 @@ public class LayoutPageViewer extends PagerAdapter {
 			ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.layout_master, pager, false);
 			RecyclerView content = (RecyclerView) viewGroup.findViewById(R.id.content);
 			content.setItemAnimator(new ItemAnimator());
-			content.setLayoutManager(new GridLayoutManager(null, inflater.getContext().getResources().getInteger(R.integer.cells)));
-
-			content.setAdapter(new ItemsAdapter(
+			GridLayoutManager gridLayoutManager = new GridLayoutManager(null, inflater.getContext().getResources().getInteger(R.integer.cells));
+			final ItemsAdapter adapter = new ItemsAdapter(
 				getSensors(layout.unitIds), coldStart
-			));
+			);
+
+			gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+				@Override
+				public int getSpanSize(int position) {
+					int itemViewType = adapter.getItemViewType(position);
+					if(itemViewType==R.layout.dimmer_switch_row){
+						return 2;
+					} else {
+						return 1;
+					}
+				}
+			});
+			content.setLayoutManager(gridLayoutManager);
+
+			content.setAdapter(adapter);
 			items.add(new ViewAndData(viewGroup, layout));
 		}
 

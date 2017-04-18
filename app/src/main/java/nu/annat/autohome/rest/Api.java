@@ -15,6 +15,9 @@ public interface Api {
 	@POST("outlet/{id}/{action}")
 	public Call<ResponseBody> setOutlet(@Path("id") String id, @Path("action") String action);
 
+	@POST("dimmer/{id}/{value}")
+	public Call<ResponseBody> setDimmer(@Path("id") String id, @Path("value") int value);
+
 	@POST("scene/{id}/{action}")
 	public  Call<ResponseBody> executeScene(String id);
 

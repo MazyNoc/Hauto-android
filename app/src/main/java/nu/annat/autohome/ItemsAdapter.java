@@ -11,11 +11,13 @@ import android.view.animation.DecelerateInterpolator;
 import java.util.ArrayList;
 import java.util.List;
 
+import nu.annat.autohome.api.DimmerSwitchUnit;
 import nu.annat.autohome.api.SwitchUnit;
 import nu.annat.autohome.api.Unit;
+import nu.annat.autohome.databinding.DimmerSwitchRowBinding;
 import nu.annat.autohome.databinding.SwitchRowBinding;
 
-public class ItemsAdapter extends RecyclerView.Adapter<SwitchViewHolder> {
+public class ItemsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 
 	private final boolean useAnims;
 	private LayoutInflater inflater;
@@ -24,20 +26,36 @@ public class ItemsAdapter extends RecyclerView.Adapter<SwitchViewHolder> {
 
 	public ItemsAdapter(List<Unit> sensors, boolean useAnims) {
 		data = sensors;
-		this.useAnims = useAnims;
+		this.useAnims = useAnims && false;
 	}
 
 	@Override
-	public SwitchViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+	public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		inflater = LayoutInflater.from(parent.getContext());
-		SwitchRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.switch_row, parent, false);
-		return new SwitchViewHolder(binding);
+		if (viewType == R.layout.dimmer_switch_row) {
+			DimmerSwitchRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.dimmer_switch_row, parent, false);
+			return new DimmerSwitchViewHolder(binding);
+		} else {
+			SwitchRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.switch_row, parent, false);
+			return new SwitchViewHolder(binding);
+		}
 	}
 
 	@Override
-	public void onBindViewHolder(SwitchViewHolder holder, int position) {
-		holder.setData((SwitchUnit) data.get(position));
+	public void onBindViewHolder(BaseViewHolder holder, int position) {
+		holder.setData(data.get(position));
 		if (useAnims) setAnimation(holder);
+	}
+
+	@Override
+	public int getItemViewType(int position) {
+		Unit unit = data.get(position);
+		if (unit instanceof DimmerSwitchUnit) {
+			return R.layout.dimmer_switch_row;
+		} else if (unit instanceof SwitchUnit) {
+			return R.layout.switch_row;
+		}
+		return R.layout.switch_row;
 	}
 
 	@Override

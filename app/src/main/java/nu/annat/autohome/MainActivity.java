@@ -3,10 +3,8 @@ package nu.annat.autohome;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
@@ -14,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
 	private Map<String, Bitmap> bitmaps = new HashMap<>();
 	private boolean coldStart;
+	private int retries = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
 			@Override
 			public void onPageSelected(int position) {
-				String id = ((LayoutPageViewer)binding.viewpager.getAdapter()).getPageId(position);
+				String id = ((LayoutPageViewer) binding.viewpager.getAdapter()).getPageId(position);
 				Preferences.setLastPageId(id);
 			}
 
@@ -104,11 +104,17 @@ public class MainActivity extends AppCompatActivity {
 			@Override
 			public void onResponse(Call<All> call, Response<All> response) {
 				updateData(response.body());
+				retries = 0;
 			}
 
 			@Override
 			public void onFailure(Call<All> call, Throwable t) {
-
+				Log.e(TAG, "Failure", t);
+				if (retries++ < 5) {
+					refresh();
+				} else {
+					Toast.makeText(MainActivity.this, "To many errors", Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 	}
@@ -162,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
 		LayoutPageViewer layoutPageViewer = new LayoutPageViewer(viewpager, LayoutInflater.from(viewpager.getContext()), body, coldStart);
 		viewpager.setAdapter(layoutPageViewer);
 
-		int currentItem = ((LayoutPageViewer)binding.viewpager.getAdapter()).getPosition(Preferences.getLastPageId());// = currentPage != null ? currentPage : viewpager.getCurrentItem();
+		int currentItem = ((LayoutPageViewer) binding.viewpager.getAdapter()).getPosition(Preferences.getLastPageId());// = currentPage != null ? currentPage : viewpager.getCurrentItem();
 		viewpager.setCurrentItem(currentItem);
 		currentPage = null;
 
@@ -187,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
 							OkHttpClient client = Server.getInstance().client;
 							okhttp3.Response execute = client.newCall(new Request.Builder()
 								.get()
-								.url("http://192.168.1.125:5443/img/" + unit.imageId)
+								.url("http://192.168.1.100:5443/img/" + unit.imageId)
 								.build()).execute();
 							InputStream stream = execute.body().byteStream();
 							File file = saveImage(unit.imageId, stream);

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="data"
+            type="nu.annat.autohome.api.DimmerSwitchUnit"/>
+
+        <variable
+            name="handler"
+            type="nu.annat.autohome.DimmerSwitchViewHolder"/>
+    </data>
+
+    <nu.annat.autohome.HalfAspectRatioFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:addStatesFromChildren="true"
+        android:background="@color/windowBackground"
+        android:stateListAnimator="@drawable/test"
+        >
+
+        <!--<android.support.constraint.ConstraintLayout-->
+        <!--android:id="@+id/constraintLayout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_margin="@dimen/item_padding_half"-->
+        <!--android:background="@{data.on ? @color/switchOn : @color/switchOff}"-->
+        <!--android:onClick="@{(view)->handler.toggle()}"-->
+        <!--android:orientation="vertical">-->
+
+        <nu.annat.autohome.ui.RippleCard
+            android:id="@+id/ripple"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:stateListAnimator="@drawable/scale"
+            app:image="@{data.image}">
+
+        </nu.annat.autohome.ui.RippleCard>
+
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="48dp"
+            android:max="1000"
+            android:onProgressChanged="@{handler::onProgressChanged}"
+            android:progress="@{data.value}"/>
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:background="@drawable/gradient"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="2"
+            android:paddingBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:paddingTop="18dp"
+            android:text="@{data.name}"
+            android:textColor="@android:color/white"
+            tools:text="mums"
+            />
+
+        <!--</android.support.constraint.ConstraintLayout>-->
+    </nu.annat.autohome.HalfAspectRatioFrameLayout>
+</layout>

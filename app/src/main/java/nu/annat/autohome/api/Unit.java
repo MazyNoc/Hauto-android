@@ -48,4 +48,6 @@ public class Unit extends BaseObservable implements Comparable<Unit> {
 		this.image = image;
 		notifyPropertyChanged(BR.image);
 	}
+
+	public static class Command{}
 }

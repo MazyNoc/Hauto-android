@@ -6,7 +6,7 @@
         <color android:color="@color/launcher_background"/>
     </item>
 
-    <item  android:right="-100dp">
+ <!--   <item  android:right="-100dp">
         <bitmap
             android:gravity="top|right"
             android:src="@drawable/hauto_bulbs"/>
@@ -17,7 +17,7 @@
             android:gravity="bottom|center_horizontal"
             android:src="@drawable/hauto_text"/>
     </item>
-
+-->
 
 
 </layer-list>

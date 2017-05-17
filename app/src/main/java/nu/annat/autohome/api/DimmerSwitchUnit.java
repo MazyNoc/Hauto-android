@@ -6,14 +6,14 @@ import nu.annat.autohome.BR;
 
 public class DimmerSwitchUnit extends SwitchUnit {
 
-	protected int value;
+	protected float value;
 
 	@Bindable
-	public int getValue() {
+	public float getValue() {
 		return value;
 	}
 
-	public void setValue(int value) {
+	public void setValue(float value) {
 		this.value = value;
 		notifyPropertyChanged(BR.value);
 	}

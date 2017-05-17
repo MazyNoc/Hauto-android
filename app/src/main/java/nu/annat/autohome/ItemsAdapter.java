@@ -12,9 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import nu.annat.autohome.api.DimmerSwitchUnit;
+import nu.annat.autohome.api.Scene;
 import nu.annat.autohome.api.SwitchUnit;
 import nu.annat.autohome.api.Unit;
 import nu.annat.autohome.databinding.DimmerSwitchRowBinding;
+import nu.annat.autohome.databinding.SceneRowBinding;
 import nu.annat.autohome.databinding.SwitchRowBinding;
 
 public class ItemsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
@@ -35,9 +37,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 		if (viewType == R.layout.dimmer_switch_row) {
 			DimmerSwitchRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.dimmer_switch_row, parent, false);
 			return new DimmerSwitchViewHolder(binding);
-		} else {
+		} else if(viewType == R.layout.switch_row){
 			SwitchRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.switch_row, parent, false);
 			return new SwitchViewHolder(binding);
+		} else {
+			SceneRowBinding binding = DataBindingUtil.inflate(inflater, R.layout.scene_row, parent, false);
+			return new SceneViewHolder(binding);
 		}
 	}
 
@@ -54,6 +59,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<BaseViewHolder> {
 			return R.layout.dimmer_switch_row;
 		} else if (unit instanceof SwitchUnit) {
 			return R.layout.switch_row;
+		} else if(unit instanceof Scene){
+			return R.layout.scene_row;
 		}
 		return R.layout.switch_row;
 	}

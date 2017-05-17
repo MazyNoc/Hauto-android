@@ -14,6 +14,7 @@ import java.io.IOException;
 
 import nu.annat.autohome.api.DimmerSwitchUnit;
 import nu.annat.autohome.api.DimmerUnit;
+import nu.annat.autohome.api.Scene;
 import nu.annat.autohome.api.SwitchUnit;
 import nu.annat.autohome.api.Unit;
 import okhttp3.OkHttpClient;
@@ -47,15 +48,12 @@ public class Server {
 				}
 
 				private Class<?> getClassFromLabel(String labelJsonElement) {
-					switch (labelJsonElement) {
-						case "DimmerSwitchUnit":
-							return DimmerSwitchUnit.class;
-						case "SwitchUnit":
-							return SwitchUnit.class;
-						case "DimmerUnit":
-							return DimmerUnit.class;
-						default:
-							return Unit.class;
+					switch (labelJsonElement){
+						case "DimmerSwitchUnit":return DimmerSwitchUnit.class;
+						case "SwitchUnit":return SwitchUnit.class;
+						case "DimmerUnit":return DimmerUnit.class;
+						case "Scene": return Scene.class;
+						default: return Unit.class;
 					}
 				}
 			};
@@ -70,6 +68,7 @@ public class Server {
 		Retrofit.Builder builder = new Retrofit.Builder()
 			.client(client)
 			.addConverterFactory(GsonConverterFactory.create(getGson()))
+			//.baseUrl("http://192.168.1.34:5443/api/");
 			.baseUrl("http://192.168.1.100:5443/api/");
 		retrofit = builder.build();
 		service = retrofit.create(Api.class);

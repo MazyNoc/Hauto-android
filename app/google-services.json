@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "363846504689",
+    "firebase_url": "https://hauto-faf54.firebaseio.com",
+    "project_id": "hauto-faf54",
+    "storage_bucket": "hauto-faf54.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:363846504689:android:456b96d4a0538eb8",
+        "android_client_info": {
+          "package_name": "nu.annat.autohome"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "363846504689-blnoq7lmvuausnem0ie8qmvdunfrc04j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABXTGTxPHNohJP9wRSjfpGT3oh7wG6j1w"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

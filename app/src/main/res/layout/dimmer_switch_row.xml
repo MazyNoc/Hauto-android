@@ -50,7 +50,7 @@
             android:layout_marginBottom="48dp"
             android:max="1000"
             android:onProgressChanged="@{handler::onProgressChanged}"
-            android:progress="@{data.value}"/>
+            android:progress="@{(int)(data.value * 1000)}"/>
 
         <TextView
             android:id="@+id/name"

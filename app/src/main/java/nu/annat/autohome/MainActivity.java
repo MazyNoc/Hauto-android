@@ -14,6 +14,7 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Toast;
@@ -206,6 +207,8 @@ public class MainActivity extends AppCompatActivity {
                                 .url("http://192.168.1.100:5443/img/" + unit.imageId)
                                 .build()).execute();
                             InputStream stream = execute.body().byteStream();
+                            if(TextUtils.isEmpty(unit.imageId))
+                                continue;
                             File file = saveImage(unit.imageId, stream);
                             unit.setImage(BitmapFactory.decodeFile(file.getAbsolutePath()));
                         } catch (Throwable t) {

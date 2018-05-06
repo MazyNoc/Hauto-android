@@ -1,8 +1,8 @@
 package nu.annat.autohome.service;
 
 import android.app.Notification;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v7.app.NotificationCompat;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -15,7 +15,7 @@ public class MessagingService extends FirebaseMessagingService {
         super.onMessageReceived(remoteMessage);
         System.out.println(remoteMessage.getData().get("test"));
 
-        Notification notification = new NotificationCompat.Builder(this)
+        Notification notification = new NotificationCompat.Builder(this, "info")
             .setSmallIcon(R.drawable.hauto_bulbs)
             .setContentTitle("Dogbell clicked")
             .setContentText("Eiji wants out")

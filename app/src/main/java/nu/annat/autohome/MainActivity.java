@@ -1,9 +1,13 @@
 package nu.annat.autohome;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.content.res.ResourcesCompat;
@@ -13,6 +17,8 @@ import android.support.v7.app.AppCompatDelegate;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.widget.Toast;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -53,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         Preferences.init(this);
 
-        //FirebaseInstanceId.getInstance().getToken();
+        FirebaseInstanceId.getInstance().getToken();
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
@@ -85,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-
+        setupNotificationChannels();
         getWindow().getDecorView().setBackgroundColor(ResourcesCompat.getColor(getResources(), R.color.windowBackground, null));
     }
 
@@ -160,9 +166,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateData(All body) {
 
-        Storage.getInstance().addSensors(body.units);
-        body.units.forEach(unit -> unit.setImage(bitmaps.get(unit.imageId)));
-        downloadImages(body.units);
+        Storage.getInstance().addSensors(body.getUnits());
+        body.getUnits().forEach(unit -> unit.setImage(bitmaps.get(unit.imageId)));
+        downloadImages(body.getUnits());
 
         ViewPager viewpager = binding.viewpager;
         TabLayout tabLayout = binding.tabLayout;
@@ -209,5 +215,21 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void setupNotificationChannels() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            String name = "Info";
+            String desc = "Information from Hauto";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+
+            NotificationChannel notificationChannel = new NotificationChannel("info", name, importance);
+            notificationChannel.setDescription(desc);
+            notificationChannel.setShowBadge(false);
+            notificationChannel.enableLights(true);
+            notificationChannel.enableVibration(true);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
     }
 }

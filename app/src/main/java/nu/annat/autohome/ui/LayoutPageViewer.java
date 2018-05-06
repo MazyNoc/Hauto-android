@@ -42,7 +42,7 @@ public class LayoutPageViewer extends PagerAdapter {
 	public LayoutPageViewer(ViewPager pager, LayoutInflater inflater, All all, boolean coldStart) {
 
 		items = new ArrayList<>();
-		for (Layout layout : all.layouts) {
+		for (Layout layout : all.getLayouts()) {
 			ViewGroup viewGroup = (ViewGroup) inflater.inflate(R.layout.layout_master, pager, false);
 			RecyclerView content = (RecyclerView) viewGroup.findViewById(R.id.content);
 			content.setItemAnimator(new ItemAnimator());

@@ -3,6 +3,7 @@
     <color name="colorPrimary">#000000</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#f50057</color>
-
     <color name="windowBackground">@color/colorPrimaryDark</color>
+    <color name="textEnabled">@android:color/white</color>
+    <color name="textDisabled">#777</color>
 </resources>

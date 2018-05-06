@@ -107,7 +107,7 @@ public class RippleCard extends FrameLayout implements View.OnClickListener {
 
 	private void prepareView(ImageView imageView) {
 		if (image == null) {
-			imageView.setImageDrawable(new ColorDrawable(on ? Color.GREEN : Color.RED));
+			imageView.setImageDrawable(new ColorDrawable(on ? 0xff082332 : 0x000000));
 		} else {
 			imageView.setImageBitmap(image);
 			imageView.setColorFilter(on ? null : colorMatrixColorFilter);

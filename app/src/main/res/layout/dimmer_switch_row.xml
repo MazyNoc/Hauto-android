@@ -16,23 +16,15 @@
             type="nu.annat.autohome.DimmerSwitchViewHolder"/>
     </data>
 
-    <nu.annat.autohome.HalfAspectRatioFrameLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        tools:background="#333"
         android:layout_margin="1dp"
         android:addStatesFromChildren="true"
         android:background="@color/windowBackground"
         android:stateListAnimator="@drawable/test"
         >
-
-        <!--<android.support.constraint.ConstraintLayout-->
-        <!--android:id="@+id/constraintLayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_margin="@dimen/item_padding_half"-->
-        <!--android:background="@{data.on ? @color/switchOn : @color/switchOff}"-->
-        <!--android:onClick="@{(view)->handler.toggle()}"-->
-        <!--android:orientation="vertical">-->
 
         <nu.annat.autohome.ui.RippleCard
             android:id="@+id/ripple"
@@ -43,33 +35,38 @@
 
         </nu.annat.autohome.ui.RippleCard>
 
-        <SeekBar
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="48dp"
-            android:max="1000"
-            android:onProgressChanged="@{handler::onProgressChanged}"
-            android:progress="@{(int)(data.value * 1000)}"/>
-
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@drawable/gradient"
             android:ellipsize="end"
-            android:gravity="center"
+            android:gravity="left"
             android:maxLines="2"
-            android:paddingBottom="8dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            android:paddingTop="18dp"
+            android:padding="8dp"
+            style="@style/Base.TextAppearance.AppCompat.Headline"
+            android:shadowRadius="8"
+            android:shadowDy="2.0"
+            android:shadowDx="2.0"
             android:text="@{data.name}"
-            android:textColor="@android:color/white"
-            tools:text="mums"
+            android:textColor="@{data.on?@color/textEnabled:@color/textDisabled}"
+
+            tools:text="Music"
+            tools:textColor="@android:color/white"
             />
 
-        <!--</android.support.constraint.ConstraintLayout>-->
-    </nu.annat.autohome.HalfAspectRatioFrameLayout>
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:max="1000"
+            app:enabled="@{data.on}"
+            android:onProgressChanged="@{handler::onProgressChanged}"
+            android:progress="@{(int)(data.value * 1000)}"
+            />
+        </LinearLayout>
+
+    </FrameLayout>
 </layout>

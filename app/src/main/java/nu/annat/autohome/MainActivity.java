@@ -195,29 +195,26 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void downloadImages(final List<Unit> units) {
-        AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
-            @Override
-            public void run() {
-                for (Unit unit : units) {
-                    if (unit.imageId != null) {
-                        try {
-                            OkHttpClient client = Server.getInstance().client;
-                            okhttp3.Response execute = client.newCall(new Request.Builder()
-                                .get()
-                                .url("http://192.168.1.100:5443/img/" + unit.imageId)
-                                .build()).execute();
-                            InputStream stream = execute.body().byteStream();
-                            if(TextUtils.isEmpty(unit.imageId))
-                                continue;
-                            File file = saveImage(unit.imageId, stream);
-                            unit.setImage(BitmapFactory.decodeFile(file.getAbsolutePath()));
-                        } catch (Throwable t) {
-                            Log.e(TAG, "run: error", t);
-                        }
+            for (Unit unit : units) {
+                if (unit.imageId != null) {
+                    if(TextUtils.isEmpty(unit.imageId))
+                        continue;
+                    AsyncTask.THREAD_POOL_EXECUTOR.execute(() -> {
+                    try {
+                        OkHttpClient client = Server.getInstance().client;
+                        okhttp3.Response execute = client.newCall(new Request.Builder()
+                            .get()
+                            .url("http://192.168.1.100:5443/img/" + unit.imageId)
+                            .build()).execute();
+                        InputStream stream = execute.body().byteStream();
+                        File file = saveImage(unit.imageId, stream);
+                        unit.setImage(BitmapFactory.decodeFile(file.getAbsolutePath()));
+                    } catch (Throwable t) {
+                        Log.e(TAG, "run: error", t);
                     }
-                }
+                });
             }
-        });
+        }
     }
 
     private void setupNotificationChannels() {

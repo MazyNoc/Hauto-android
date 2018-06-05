@@ -25,15 +25,11 @@
         tools:background="#333"
         android:stateListAnimator="@drawable/test"
         >
-
-        <!--<android.support.constraint.ConstraintLayout-->
-        <!--android:id="@+id/constraintLayout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_margin="@dimen/item_padding_half"-->
-        <!--android:background="@{data.on ? @color/switchOn : @color/switchOff}"-->
-        <!--android:onClick="@{(view)->handler.toggle()}"-->
-        <!--android:orientation="vertical">-->
+      <android.support.v7.widget.CardView android:layout_width="match_parent"
+                                          android:layout_height="match_parent"
+                                          app:cardBackgroundColor="#444"
+                                          app:cardCornerRadius="8dp"
+      android:layout_margin="4dp">
 
         <nu.annat.autohome.ui.RippleCard
             android:id="@+id/ripple"
@@ -61,6 +57,7 @@
 tools:textColor="@android:color/white"
             tools:text="Stairs"
             />
+      </android.support.v7.widget.CardView>
 
         <!--</android.support.constraint.ConstraintLayout>-->
     </nu.annat.autohome.AspectRatioFrameLayout>

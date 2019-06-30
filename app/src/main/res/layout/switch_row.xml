@@ -1,63 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    >
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+>
 
     <data>
 
         <variable
-            name="data"
-            type="nu.annat.autohome.api.SwitchUnit"/>
+                name="data"
+                type="nu.annat.autohome.api.SwitchUnit"/>
 
         <variable
-            name="handler"
-            type="nu.annat.autohome.SwitchViewHolder"/>
+                name="handler"
+                type="nu.annat.autohome.SwitchViewHolder"/>
     </data>
 
     <nu.annat.autohome.AspectRatioFrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="1dp"
-        android:addStatesFromChildren="true"
-        android:background="@color/windowBackground"
-        tools:background="#333"
-        android:stateListAnimator="@drawable/test"
-        >
-      <android.support.v7.widget.CardView android:layout_width="match_parent"
-                                          android:layout_height="match_parent"
-                                          app:cardBackgroundColor="#444"
-                                          app:cardCornerRadius="8dp"
-      android:layout_margin="4dp">
-
-        <nu.annat.autohome.ui.RippleCard
-            android:id="@+id/ripple"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:stateListAnimator="@drawable/scale"
-            app:image="@{data.image}"/>
-
-        <TextView
-            android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="top|start"
-            android:gravity="start"
-            android:padding="8dp"
-            style="@style/Base.TextAppearance.AppCompat.Headline"
-            android:maxLines="2"
-            android:ellipsize="end"
-            android:text="@{data.name}"
-            android:shadowRadius="8"
-            android:shadowDy="2.0"
-            android:shadowDx="2.0"
-            android:shadowColor="#000000"
-            android:textColor="@{data.on?@color/textEnabled:@color/textDisabled}"
-tools:textColor="@android:color/white"
-            tools:text="Stairs"
+            android:layout_margin="1dp"
+            android:addStatesFromChildren="true"
+            android:background="@color/windowBackground"
+            tools:background="#333"
+            android:stateListAnimator="@drawable/test"
+    >
+        <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:cardBackgroundColor="#444"
+                app:cardCornerRadius="8dp"
+                android:layout_margin="4dp">
+
+            <nu.annat.autohome.ui.RippleCard
+                    android:id="@+id/ripple"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:stateListAnimator="@drawable/scale"
+                    app:image="@{data.image}"/>
+
+            <TextView
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="top|start"
+                    android:gravity="start"
+                    android:padding="8dp"
+                    style="@style/Base.TextAppearance.AppCompat.Headline"
+                    android:maxLines="2"
+                    android:ellipsize="end"
+                    android:text="@{data.name}"
+                    android:shadowRadius="8"
+                    android:shadowDy="2.0"
+                    android:shadowDx="2.0"
+                    android:shadowColor="#000000"
+                    android:textColor="@{data.on?@color/textEnabled:@color/textDisabled}"
+                    tools:textColor="@android:color/white"
+                    tools:text="Stairs"
             />
-      </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
         <!--</android.support.constraint.ConstraintLayout>-->
     </nu.annat.autohome.AspectRatioFrameLayout>

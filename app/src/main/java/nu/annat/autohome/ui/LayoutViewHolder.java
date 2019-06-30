@@ -1,6 +1,6 @@
 package nu.annat.autohome.ui;
 
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.View;
 
 import nu.annat.autohome.api.Unit;

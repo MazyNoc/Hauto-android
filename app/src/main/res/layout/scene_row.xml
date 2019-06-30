@@ -11,7 +11,7 @@
             type="nu.annat.autohome.api.Scene"/>
     </data>
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
 
         android:layout_width="match_parent"
@@ -32,6 +32,6 @@
             tools:text="mums"/>
 
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>

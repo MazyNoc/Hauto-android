@@ -10,7 +10,7 @@ class Device : Comparable<Device> {
     //        return (o1, o2) -> o1.name.compareTo(o2.name);
     //    }
 
-    override fun compareTo(device: Device): Int {
-        return name!!.compareTo(device.name!!)
+    override fun compareTo(other: Device): Int {
+        return name!!.compareTo(other.name!!)
     }
 }

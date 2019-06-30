@@ -1,10 +1,12 @@
 package nu.annat.autohome.api;
 
-import android.databinding.BaseObservable;
-import android.databinding.Bindable;
 import android.graphics.Bitmap;
 
-import com.android.databinding.library.baseAdapters.BR;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+import nu.annat.autohome.BR;
+
 
 public class Unit extends BaseObservable implements Comparable<Unit> {
 	public String type;
@@ -49,5 +51,6 @@ public class Unit extends BaseObservable implements Comparable<Unit> {
 		notifyPropertyChanged(BR.image);
 	}
 
-	public static class Command{}
+	public static class Command {
+	}
 }

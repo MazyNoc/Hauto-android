@@ -1,6 +1,6 @@
 package nu.annat.autohome.api;
 
-import android.databinding.Bindable;
+import androidx.databinding.Bindable;
 
 import nu.annat.autohome.BR;
 
